@@ -37,3 +37,7 @@ After the network has trained you can also produce an animation showing the evol
 # About the author
 
 [LinkedIn profile of David Garcia](https://ca.linkedin.com/in/david-garcia-70913311).
+
+# Updates to code from source from David's repo
+
+Adapted source to work on tf 1.11 

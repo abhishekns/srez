@@ -18,11 +18,11 @@ def _summarize_progress(train_data, feature, label, gene_output, batch, suffix, 
     bicubic = tf.maximum(tf.minimum(bicubic, 1.0), 0.0)
 
     clipped = tf.maximum(tf.minimum(gene_output, 1.0), 0.0)
-
-    image   = tf.concat(2, [nearest, bicubic, clipped, label])
+    #print('nearest: ',nearest, 'bicubic: ', bicubic, 'clipped: ', clipped, 'label: ', label)
+    image   = tf.concat([nearest, bicubic, clipped, label], 2)
 
     image = image[0:max_samples,:,:,:]
-    image = tf.concat(0, [image[i,:,:,:] for i in range(max_samples)])
+    image = tf.concat([image[i,:,:,:] for i in range(max_samples)], 0)
     image = td.sess.run(image)
 
     filename = 'batch%06d_%s.png' % (batch, suffix)
@@ -62,7 +62,7 @@ def _save_checkpoint(train_data, batch):
 def train_model(train_data):
     td = train_data
 
-    summaries = tf.merge_all_summaries()
+    summaries = tf.summary.merge_all() # tf.merge_all_summaries()
     td.sess.run(tf.initialize_all_variables())
 
     lrval       = FLAGS.learning_rate_start
